@@ -1,4 +1,4 @@
-// Definisikan tipe Post langsung di sini
+// Definisikan tipe Post secara langsung di sini
 export interface Post {
   id: number;
   title: string;
@@ -9,7 +9,7 @@ export async function getLastPost(): Promise<Post[]> {
   try {
     const res = await fetch("https://jsonplaceholder.typicode.com/posts");
     const data: Post[] = await res.json();
-    return data.slice(0, 3); // Ambil 3 data terakhir/pertama
+    return data.slice(0, 3);
   } catch (error) {
     console.error("Gagal mengambil data:", error);
     return [];
