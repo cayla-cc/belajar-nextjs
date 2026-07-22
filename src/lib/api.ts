@@ -1,11 +1,15 @@
-import { Post } from "@/types/post";
+// Definisikan tipe Post langsung di sini
+export interface Post {
+  id: number;
+  title: string;
+  body: string;
+}
 
 export async function getLastPost(): Promise<Post[]> {
   try {
-    const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
-    if (!res.ok) return [];
-    const posts: Post[] = await res.json();
-    return posts;
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data: Post[] = await res.json();
+    return data.slice(0, 3); // Ambil 3 data terakhir/pertama
   } catch (error) {
     console.error("Gagal mengambil data:", error);
     return [];
@@ -15,17 +19,20 @@ export async function getLastPost(): Promise<Post[]> {
 export async function getAllPost(): Promise<Post[]> {
   try {
     const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-    if (!res.ok) return [];
-    const posts: Post[] = await res.json();
-    return posts;
+    return await res.json();
   } catch (error) {
     console.error("Gagal mengambil data:", error);
     return [];
   }
 }
 
-export async function getDetailPost(id: number): Promise<Post> {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-  const post: Post = await res.json();
-  return post;
+export async function getDetailPost(id: number): Promise<Post | null> {
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (error) {
+    console.error("Gagal mengambil data detail:", error);
+    return null;
+  }
 }
