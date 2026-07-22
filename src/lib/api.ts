@@ -1,4 +1,3 @@
-// Definisikan tipe Post secara langsung di sini
 export interface Post {
   id: number;
   title: string;
