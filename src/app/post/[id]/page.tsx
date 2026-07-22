@@ -8,7 +8,9 @@ interface PageProps {
 
 export default async function DetailPostPage({ params }: PageProps) {
   const { id } = await params;
-  const post = await getDetailPost(id);
+  
+  // Ubah id dari string menjadi number agar sesuai dengan fungsi API
+  const post = await getDetailPost(Number(id));
 
   if (!post) {
     return <div className="main-heading"><h1>Postingan tidak ditemukan</h1></div>;
